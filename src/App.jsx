@@ -95,7 +95,17 @@ const points = [
   { name: "QUÍMICA FARMACEUT", coords: [670, 710], type: 'class' },
   { name: "QUÍMICA ORGÂNICA", coords: [600, 710], type: 'class' },
   { name: "ESTER. ALMOX.", coords: [540, 710], type: 'class' },
-  { name: "HOMEP.", coords: [600, 710], type: 'class' },
+  { name: "HOMEP.", coords: [540, 630], type: 'class' },
+  { name: "COSMET.", coords: [615, 635], type: 'class' },
+  { name: "MICROSC.", coords: [680, 635], type: 'class' },
+  { name: "LAB. GASTRONÔMIA NUTRIÇÃO", coords: [660, 795], type: 'class' },
+  { name: "COZINHA", coords: [695, 855], type: 'class' },
+  { name: "SECRET.", coords: [477, 437], type: 'class' },
+  { name: "SALA COORDENADORES", coords: [480, 480], type: 'class' },
+  { name: "ACERVO", coords: [478, 520], type: 'class' },
+  { name: "SALA REUNIÃO GRAD. I", coords: [473, 553], type: 'class' },
+  { name: "SALA PROFESSORES", coords: [473, 587], type: 'class' },
+  { name: "SALA FISIOTERAPIA", coords: [295, 738], type: 'class' },
 ];
 
 // Fix marker icon
@@ -212,18 +222,19 @@ export default function App() {
     <div style={{ height: '100vh', width: '100%', position: 'relative' }}>
       <input
         type="text"
-        placeholder="Search location..."
+        placeholder="Local da busca..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         style={{
+          background: 'solid black',
           position: 'absolute',
           top: 10,
-          left: 10,
+          left: 600,
           zIndex: 1000,
           padding: '8px',
           width: '220px',
-          borderRadius: '5px',
-          border: '1px solid gray'
+          borderRadius: '25px',
+          border: '3px solid black'
         }}
       />
 
@@ -232,14 +243,14 @@ export default function App() {
           style={{
             position: 'absolute',
             top: 45,
-            left: 10,
+            left: 600,
             zIndex: 1000,
-            background: 'white',
-            border: '1px solid gray',
-            width: '220px',
+            background: 'orange',
+            border: '3px solid black',
+            width: '250px',
             maxHeight: '150px',
             overflowY: 'auto',
-            borderRadius: '5px'
+            borderRadius: '25px'
           }}
         >
           {filtered.map((p, i) => (
@@ -247,9 +258,9 @@ export default function App() {
               key={i}
               onClick={() => handleSearchSelect(p)}
               style={{
-                padding: '6px',
+                padding: '8px',
                 cursor: 'pointer',
-                borderBottom: '1px solid #eee'
+                borderBottom: '3px solid black'
               }}
             >
               {p.name}
@@ -267,13 +278,14 @@ export default function App() {
         top: 10,
         right: 10,
         zIndex: 1000,
-        background: 'rgba(255,255,255,0.9)',
+        background: 'rgba(85, 149, 8, 0.9)',
         padding: '10px',
-        borderRadius: '5px',
-        fontSize: '12px'
+        border: '2px solid black',
+        borderRadius: '25px',
+        fontSize: '20px'
       }}>
-        <div><strong>Origin:</strong> {origin ? origin.name : 'None'}</div>
-        <div><strong>Destination:</strong> {destination ? destination.name : 'None'}</div>
+        <div><strong>Origem:</strong> {origin ? origin.name : 'None'}</div>
+        <div><strong>Destino:</strong> {destination ? destination.name : 'None'}</div>
         <div><strong>Path:</strong> {pathCoords ? `${pathCoords.length} points` : 'None'}</div>
       </div>
 
@@ -296,8 +308,8 @@ export default function App() {
               Type: {point.type}<br />
               Coords: [{point.coords[0].toFixed(1)}, {point.coords[1].toFixed(1)}]<br />
               Grid: [{pixelToGrid(point.coords).join(', ')}]<br />
-              {origin?.name === point.name && <span style={{color: 'green'}}>✓ Origin</span>}<br />
-              {destination?.name === point.name && <span style={{color: 'red'}}>✓ Destination</span>}
+              {origin?.name === point.name && <span style={{color: 'green'}}>✓ Origem</span>}<br />
+              {destination?.name === point.name && <span style={{color: 'red'}}>✓ Destino</span>}
             </Popup>
           </Marker>
         ))}
@@ -305,9 +317,9 @@ export default function App() {
         {pathCoords && pathCoords.length > 0 && (
           <Polyline 
             positions={pathCoords} 
-            color="blue" 
+            color="yellow" 
             weight={4}
-            opacity={0.7}
+            opacity={1}
           />
         )}
         {origin && <FlyToLocation coords={origin.coords} />}
