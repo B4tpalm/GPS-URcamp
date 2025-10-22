@@ -11,15 +11,13 @@ import {
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Floor plan bounds (matching your image dimensions)
 const bounds = [[0, 0], [805, 922]];
 const GRID_ROWS = 80;
 const GRID_COLS = 80;
 
-// Calculate cell size based on image dimensions
-const cellHeight = 805 / GRID_ROWS; // ~40.25
-const cellWidth = 922 / GRID_COLS;  // ~46.1
 
+const cellHeight = 805 / GRID_ROWS; 
+const cellWidth = 922 / GRID_COLS;  
 // Grid: 0 = walkable, 1 = wall
 const gridData = [
   [
@@ -505,24 +503,19 @@ const gridData = [
 
 ];
 
-
-
-// Function to convert pixel coordinates to grid coordinates
 const pixelToGrid = (pixelCoords) => {
-  const [y, x] = pixelCoords; // Note: Leaflet uses [lat, lng] which maps to [y, x]
+  const [y, x] = pixelCoords; 
   const row = Math.floor(y / cellHeight);
   const col = Math.floor(x / cellWidth);
   return [Math.max(0, Math.min(GRID_ROWS - 1, row)), Math.max(0, Math.min(GRID_COLS - 1, col))];
 };
 
-// Function to convert grid coordinates to pixel coordinates
 const gridToPixel = ([row, col]) => {
   const y = row * cellHeight + cellHeight / 2;
   const x = col * cellWidth + cellWidth / 2;
   return [y, x];
 };
 
-// Updated points with consistent coordinates
 const points = [
   { name: "Entrada A", coords: [50, 630], type: 'entry' },
   { name: "O1A", coords: [100, 515], type: 'class' },
@@ -565,7 +558,6 @@ const points = [
   { name: "SALA FISIOTERAPIA", coords: [295, 738], type: 'class' },
 ];
 
-// Fix marker icon
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -626,7 +618,6 @@ export default function App() {
     const startGrid = pixelToGrid(startCoords);
     const endGrid = pixelToGrid(endCoords);
 
-    // Check if start and end positions are walkable
     if (gridData[startGrid[0]] && gridData[startGrid[0]][startGrid[1]] === 1) {
       console.warn('Start position is not walkable, finding nearest walkable cell');
     }
